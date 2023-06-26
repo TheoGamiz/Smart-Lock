@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "337708922037",
+    "project_id": "smart-lock-4ee3f",
+    "storage_bucket": "smart-lock-4ee3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337708922037:android:beaa846cc1d4740e9dfafc",
+        "android_client_info": {
+          "package_name": "com.example.flutter_smartlock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337708922037-t07b8e57is0sae0pbl7idsgda7nbp025.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATh89Z72EtUXE1lvfZawMYqeYo4PkLQWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337708922037-t07b8e57is0sae0pbl7idsgda7nbp025.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "337708922037-j7f1vhjuq6rparus1ei3slc45bu9n7m9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterSmartlock"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
