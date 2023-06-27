@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
        
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Smart Lock'),
     );
   }
 }
@@ -52,16 +52,26 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _addUser() async {
-    final CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
-
+  Future<void> _openLock() async {
+    //final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+    final CollectionReference lockCollection = FirebaseFirestore.instance.collection('lock');
     try {
-      await usersCollection
-          .add({"first_name": "John", "last_name": "Doe", "age": 42});
-      print("User added");
+      await lockCollection.doc("XhCV3TOYYNEt8aR3jmzj").update({"lock": true});
+      print("Ouvert");
     } catch (error) {
-      print("Failed to add user: $error");
+      print("Failed to ouvrir: $error");
+    }
+  }
+
+  Future<void> _closeLock() async {
+    //final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+    final CollectionReference lockCollection =
+        FirebaseFirestore.instance.collection('lock');
+    try {
+      await lockCollection.doc("XhCV3TOYYNEt8aR3jmzj").update({"lock": false});
+      print("Ferme");
+    } catch (error) {
+      print("Failed to ferme: $error");
     }
   }
 
@@ -79,21 +89,19 @@ class _MyHomePageState extends State<MyHomePage> {
          
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            ElevatedButton(onPressed: _openLock, child: Text(
+              "Deverouiller"
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
             ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: _closeLock, child: Text(
+              "Fermer"
+            ),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addUser,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+     // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
