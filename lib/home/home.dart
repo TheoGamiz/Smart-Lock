@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,7 +17,6 @@ var isOpen = false;
 Future<void> _openLock() async {
   //final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
-/*
   final CollectionReference lockCollection =
       FirebaseFirestore.instance.collection('lock');
   try {
@@ -24,21 +24,52 @@ Future<void> _openLock() async {
     print("Ouvert");
   } catch (error) {
     print("Failed to ouvrir: $error");
-  }*/
+  }
 }
 
 Future<void> _closeLock() async {
   //final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
-  /*
   final CollectionReference lockCollection =
       FirebaseFirestore.instance.collection('lock');
   try {
     await lockCollection.doc("XhCV3TOYYNEt8aR3jmzj").update({"lock": false});
-    print("Ferme");
+    print("fermer la porte");
   } catch (error) {
-    print("Failed to ferme: $error");
-  }*/
+    print("Failed to fermer: $error");
+  }
+}
+
+Future<void> _newFinger() async {
+// Pour un Document
+
+  final CollectionReference lockCollection =
+      FirebaseFirestore.instance.collection('lock');
+  final DocumentSnapshot lock_id =
+      await lockCollection.doc("XhCV3TOYYNEt8aR3jmzj").get();
+  var data = lock_id.data() as Map<String, dynamic>;
+  var boolLockId = data['lock_id']; // Conversion en Map<String, dynamic>
+  print("lock id: ${boolLockId}");
+
+  try {
+    await lockCollection
+        .doc("XhCV3TOYYNEt8aR3jmzj")
+        .update({"newFinger": true});
+        
+    print("nouveau");
+  } catch (error) {
+    print("Failed to nouveau: $error");
+  }
+
+  try {
+    await lockCollection
+        .doc("XhCV3TOYYNEt8aR3jmzj")
+        .update({"lock_id": boolLockId + 1});
+
+    print("nouveau");
+  } catch (error) {
+    print("Failed to nouveau: $error");
+  }
 }
 
 class _HomeState extends State<Home> {
@@ -65,25 +96,32 @@ class _HomeState extends State<Home> {
             ElevatedButton(
               onPressed: () {
                 if (isOpen) {
-                  _openLock();
+                  _closeLock();
                   setState(() {
                     isOpen = false;
                     lockIcon = LineIcons.lock;
                     buttonText = "Ouvrir";
                   });
                 } else {
-                  _closeLock();
+                  _openLock();
                   setState(() {
                     isOpen = true;
                     lockIcon = LineIcons.lockOpen;
                     buttonText = "Fermer";
                   });
                 }
-
-                _closeLock();
               },
               child: Text(buttonText),
             ),
+            SizedBox(
+              height: 100,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _newFinger();
+              },
+              child: Text("Nouveau"),
+            )
           ],
         ),
       ),
